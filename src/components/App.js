@@ -9,6 +9,7 @@ function App() {
     character: "",
   });
   const [searchQuote, setSearchQuote] = useState("");
+  const [searchCharacter, setSearchCharacter] = useState("Todos");
 
   //New quote
   const handleNewQuote = (ev) => {
@@ -22,6 +23,10 @@ function App() {
 
   const handleSearchQuote = (ev) => {
     setSearchQuote(ev.target.value);
+  };
+
+  const handleSearchCharacter = (ev) => {
+    setSearchCharacter(ev.target.value);
   };
 
   //Add new quote
@@ -39,6 +44,10 @@ function App() {
 
     .filter((eachQuote) =>
       eachQuote.quote.toLowerCase().includes(searchQuote.toLowerCase())
+    )
+
+    .filter((eachQuote) =>
+      eachQuote.character.toLowerCase().includes(searchCharacter.toLowerCase())
     )
 
     .map((eachQuote, i) => {
@@ -63,6 +72,21 @@ function App() {
             value={searchQuote}
             onChange={handleSearchQuote}
           />
+          <label htmlFor="searchCharacter">Filtrar por personaje:</label>
+          <select
+            name="searchCharacter"
+            id="searchCharacter"
+            value={searchCharacter}
+            onChange={handleSearchCharacter}
+          >
+            <option value="">Todos</option>
+            <option value="ross">Ross</option>
+            <option value="monica">Monica</option>
+            <option value="joey">Joey</option>
+            <option value="phoebe">Phoebe</option>
+            <option value="chandler">Chandler</option>
+            <option value="Rachel">Rachel</option>
+          </select>
         </form>
       </header>
       <main>
