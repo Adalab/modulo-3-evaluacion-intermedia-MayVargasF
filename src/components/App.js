@@ -1,15 +1,20 @@
 import "../styles/App.scss";
-import quotes from "../data/quotes.json";
-import { useState } from "react";
+import getDataApi from "../services/fetch.js";
+import { useState, useEffect } from "react";
 
 function App() {
-  const [data, setData] = useState(quotes);
+  const [data, setData] = useState([]);
   const [newQuote, setNewQuote] = useState({
     quote: "",
     character: "",
   });
   const [searchQuote, setSearchQuote] = useState("");
-  const [searchCharacter, setSearchCharacter] = useState("Todos");
+  const [searchCharacter, setSearchCharacter] = useState("");
+
+  //fetch
+  useEffect(() => {
+    getDataApi().then((dataApi) => setData(dataApi));
+  }, []);
 
   //New quote
   const handleNewQuote = (ev) => {
