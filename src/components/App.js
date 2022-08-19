@@ -8,6 +8,7 @@ function App() {
     quote: "",
     character: "",
   });
+  const [searchQuote, setSearchQuote] = useState("");
 
   //New quote
   const handleNewQuote = (ev) => {
@@ -15,6 +16,12 @@ function App() {
       ...newQuote,
       [ev.target.id]: ev.target.value,
     });
+  };
+
+  //filter
+
+  const handleSearchQuote = (ev) => {
+    setSearchQuote(ev.target.value);
   };
 
   //Add new quote
@@ -28,45 +35,65 @@ function App() {
   };
 
   //render
-  const htmlData = data.map((eachQuote, i) => {
-    return (
-      <li key={i}>
-        <p>{eachQuote.quote}</p>
-        <p>{eachQuote.character}</p>
-      </li>
-    );
-  });
+  const htmlData = data
+
+    .filter((eachQuote) =>
+      eachQuote.quote.toLowerCase().includes(searchQuote.toLowerCase())
+    )
+
+    .map((eachQuote, i) => {
+      return (
+        <li key={i}>
+          <p>{eachQuote.quote}</p>
+          <p>{eachQuote.character}</p>
+        </li>
+      );
+    });
 
   return (
     <div>
-      <h1>Frases de Friends</h1>
-      <ul>{htmlData}</ul>
-      <form>
-        <h2>Añadir una nueva frase</h2>
-        <label htmlFor="quote">Frase:</label>
-        <input
-          type="text"
-          name="quote"
-          id="quote"
-          placeholder="Ejemplo: “See? He’s her lobster.”"
-          value={newQuote.quote}
-          onChange={handleNewQuote}
-        />
-        <label htmlFor="character">Personaje:</label>
-        <input
-          type="text"
-          name="character"
-          id="character"
-          placeholder="Ejemplo: Phoebe"
-          value={newQuote.character}
-          onChange={handleNewQuote}
-        />
-        <input
-          type="submit"
-          value="Añadir nueva frase"
-          onClick={handleAddNewQuote}
-        />
-      </form>
+      <header>
+        <h1>Frases de Friends</h1>
+        <form>
+          <label htmlFor="searchQuote">Filtrar por frase:</label>
+          <input
+            type="searchQuote"
+            name="searchQuote"
+            id="searchQuote"
+            value={searchQuote}
+            onChange={handleSearchQuote}
+          />
+        </form>
+      </header>
+      <main>
+        <ul>{htmlData}</ul>
+        <form>
+          <h2>Añadir una nueva frase</h2>
+          <label htmlFor="quote">Frase:</label>
+          <input
+            type="text"
+            name="quote"
+            id="quote"
+            placeholder="Ejemplo: “See? He’s her lobster.”"
+            value={newQuote.quote}
+            onChange={handleNewQuote}
+          />
+          <label htmlFor="character">Personaje:</label>
+          <input
+            type="text"
+            name="character"
+            id="character"
+            placeholder="Ejemplo: Phoebe"
+            value={newQuote.character}
+            onChange={handleNewQuote}
+          />
+          <input
+            type="submit"
+            value="Añadir nueva frase"
+            onClick={handleAddNewQuote}
+          />
+        </form>
+      </main>
     </div>
   );
 }
