@@ -24,6 +24,15 @@ function App() {
     });
   };
 
+  //Form validation
+  const isValidForm = () => {
+    if (newQuote.quote !== "" && newQuote.character !== "") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   //filter
 
   const handleSearchQuote = (ev) => {
@@ -104,6 +113,7 @@ function App() {
             name="quote"
             id="quote"
             placeholder="Ejemplo: “See? He’s her lobster.”"
+            required
             value={newQuote.quote}
             onChange={handleNewQuote}
           />
@@ -113,6 +123,7 @@ function App() {
             name="character"
             id="character"
             placeholder="Ejemplo: Phoebe"
+            required
             value={newQuote.character}
             onChange={handleNewQuote}
           />
@@ -120,6 +131,7 @@ function App() {
             type="submit"
             value="Añadir nueva frase"
             onClick={handleAddNewQuote}
+            disabled={isValidForm() === false}
           />
         </form>
       </main>
